@@ -128,3 +128,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ignore folders (relative to repo root)
+_tmp/
+_temp/
+test/
+old/
+
+# Ignore a specific file
+push.bat
