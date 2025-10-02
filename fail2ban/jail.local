@@ -1,0 +1,52 @@
+# /etc/fail2ban/jail.local
+#
+# This file contains your local jail configurations.
+# Settings here override the defaults in jail.conf.
+#
+
+[DEFAULT]
+# Set the default ban time to 1 day.
+# Formats: 1d, 24h, 86400s
+bantime = 1d
+
+# Default time window to detect attacks (e.g., 5 failed attempts in 10 minutes).
+findtime = 10m
+
+# Default number of failed attempts before a ban.
+maxretry = 5
+
+#
+# --- JAILS ---
+#
+
+# SSH Server Protection
+[sshd]
+enabled = true
+backend = systemd
+
+# You can add more specific settings here if needed, like a different port.
+# port = 2222
+
+# Nginx Protection
+# These jails protect against common web attacks.
+
+[nginx-http-auth]
+# Blocks hosts that repeatedly fail HTTP authentication.
+# This requires you to have password-protected directories on your site.
+enabled = true
+logpath  = /var/log/nginx/*error.log
+
+[nginx-botsearch]
+# Blocks bots that scan your site for vulnerabilities or non-existent pages.
+enabled = true
+logpath  = /var/log/nginx/*access.log
+
+[nginx-dos]
+# Protects against a simple Denial of Service (DoS) attack by banning
+# clients that make an excessive number of requests very quickly.
+# Be careful: a misconfiguration could block legitimate search engine crawlers.
+enabled = true
+logpath  = /var/log/nginx/*access.log
+
+# You might want to use a higher maxretry for this specific jail.
+# maxretry = 100
