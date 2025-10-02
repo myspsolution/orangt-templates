@@ -5,6 +5,12 @@
 #
 
 [DEFAULT]
+
+#
+# Ignore local and private IP ranges.
+#
+ignoreip = 127.0.0.1/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+
 # Set the default ban time to 1 day.
 # Formats: 1d, 24h, 86400s
 bantime = 1d
@@ -14,6 +20,8 @@ findtime = 10m
 
 # Default number of failed attempts before a ban.
 maxretry = 5
+
+backend = auto
 
 #
 # --- JAILS ---
