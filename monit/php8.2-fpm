@@ -1,0 +1,11 @@
+# /etc/monit/conf.d/php8.2-fpm
+
+check process php8.2-fpm with pidfile /run/php/php8.2-fpm.pid
+   start program = "/usr/bin/systemctl start php8.2-fpm.service"
+   stop program  = "/usr/bin/systemctl stop php8.2-fpm.service"
+
+   # Restart on high resource usage (as you requested)
+   if cpu > 60% for 3 cycles then restart
+   if memory > 80% for 3 cycles then restart
+
+   group php-and-system

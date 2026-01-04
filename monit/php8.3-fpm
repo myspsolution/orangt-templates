@@ -1,0 +1,14 @@
+# /etc/monit/conf.d/php8.3-fpm
+
+# when neccesary, obtain php-fpm pid on:
+# /etc/php/8.3/fpm/php-fpm.conf
+
+check process php8.3-fpm with pidfile /run/php/php8.3-fpm.pid
+   start program = "/usr/bin/systemctl start php8.3-fpm.service"
+   stop program  = "/usr/bin/systemctl stop php8.3-fpm.service"
+
+   # Restart on high resource usage (as you requested)
+   if cpu > 60% for 3 cycles then restart
+   if memory > 80% for 3 cycles then restart
+
+   group php-and-system

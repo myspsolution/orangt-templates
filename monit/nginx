@@ -1,0 +1,11 @@
+# /etc/monit/conf.d/nginx
+
+check process nginx with pidfile /run/nginx.pid
+    start program = "/usr/bin/systemctl start nginx.service"
+    stop program  = "/usr/bin/systemctl stop nginx.service"
+
+    # Restart on high resource usage (adjust values as needed)
+    if cpu > 60% for 2 cycles then restart
+    if memory > 1024 MB for 2 cycles then restart
+
+    group php-and-system

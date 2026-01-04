@@ -1,0 +1,11 @@
+# /etc/monit/conf.d/[next-domain]
+
+check process [next-domain] matching "start -p [next-port]"
+    start program = "/usr/bin/systemctl start [next-domain].service"
+    stop  program = "/usr/bin/systemctl stop [next-domain].service"
+
+    # Resource guards
+    if cpu > 70% for 3 cycles then restart
+    if totalmem > 2048 MB for 3 cycles then restart
+
+    group nodejs-apps

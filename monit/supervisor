@@ -1,0 +1,14 @@
+# /etc/monit/conf.d/supervisor
+
+# when neccesary, obtaind supervisor pid with:
+# grep "pidfile=" /etc/supervisor/supervisord.conf
+
+check process supervisor with pidfile /var/run/supervisord.pid
+   start program = "/usr/bin/systemctl start supervisor.service"
+   stop program  = "/usr/bin/systemctl stop supervisor.service"
+
+   # Restart on high resource usage (supervisord should be very light)
+   if cpu > 50% for 3 cycles then restart
+   if memory > 1024 MB for 2 cycles then restart
+
+   group php-and-system

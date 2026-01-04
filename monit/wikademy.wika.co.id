@@ -1,0 +1,11 @@
+# /etc/monit/conf.d/wikademy.wika.co.id
+
+check process wikademy.wika.co.id matching "start -p 3001"
+    #start program = "echo 'wikademy.wika.co.id' > /tmp/monit-restart.txt"
+    #stop  program = "echo 'wikademy.wika.co.id' > /tmp/monit-restart.txt"
+
+    # Resource guards
+    if cpu > 50% for 2 cycles then exec "/usr/bin/bash /home/orangt/monit-restart-file.sh wikademy.wika.co.id"
+    if memory > 50% for 2 cycles then exec "/usr/bin/bash /home/orangt/monit-restart-file.sh wikademy.wika.co.id"
+
+    group nodejs-apps
